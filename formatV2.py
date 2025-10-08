@@ -105,6 +105,10 @@ for folder in folders:
                         m2 = re.search(r"([0-9]+)ns", line)
                         if m2:
                             entry['decap_hybrid'] = int(m2.group(1))
+                    elif "sigtotal" in line:
+                        m2 = re.search(r"sigtotal:\s*([0-9]+)ns", line)
+                        if m2:
+                            entry['decap_hybrid'] = int(m2.group(1))
                 # end file: push last entry if exists
                 if entry is not None:
                     client_rows.append(entry)
@@ -213,7 +217,7 @@ for folder in folders:
 
 # Build DataFrames
 s_client_packets_df = pd.DataFrame(packets_rows, columns=['sig','pq','cl','delay','loss','mtu','packets'])
-s_client_df = pd.DataFrame(client_rows, columns=['sig','pq','cl','delay','loss','mtu','idx','decap_cl','decap_pq','decap_hybrid'])
+s_client_df = pd.DataFrame(client_rows, columns=['sig','pq','cl','delay','loss','mtu','idx','decap_cl','decap_pq','decap_hybrid','sig_verify'])
 s_client_perf_df = pd.DataFrame(client_perf_rows, columns=['sig','pq','cl','delay','loss','mtu','idx','user_time','system_time','cpu','wall_clock_time','memory','handshake_ns'])
 s_server_df = pd.DataFrame(server_rows, columns=['sig','pq','cl','delay','loss','mtu','idx','encap_cl','encap_pq','encap_hybrid'])
 

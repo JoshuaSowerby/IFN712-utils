@@ -2,6 +2,7 @@ all_pq_kems=("frodo640shake" "frodo976shake" "frodo1344shake" "bikel1" "bikel3" 
 all_cl_kems=("x25519" "x448" "secp256_r1" "secp384_r1" "secp521_r1")
 
 all_hybrid_kems=("p256_frodo640shake" "x25519_frodo640shake" "x448_frodo640shake" "p384_frodo976shake" "x25519_frodo976shake" "x448_frodo976shake" "p521_frodo1344shake" "x25519_frodo1344shake" "x448_frodo1344shake" "p256_mlkem512" "x25519_mlkem512" "x448_mlkem512" "p384_mlkem768" "x25519_mlkem768" "x448_mlkem768" "p521_mlkem1024" "x25519_mlkem1024" "x448_mlkem1024" "p256_bikel1" "x25519_bikel1" "x448_bikel1" "p384_bikel3" "x25519_bikel3" "x448_bikel3" "p521_bikel5" "x25519_bikel5" "x448_bikel5" "p256_hqc128" "x25519_hqc128" "x448_hqc128" "p384_hqc192" "x25519_hqc192" "x448_hqc192" "p521_hqc256" "x25519_hqc256" "x448_hqc256")
+small_all_hybrid_kems=("p256_frodo640shake" "x25519_frodo640shake" "x448_frodo640shake" "p384_frodo976shake" "p256_mlkem512" "x25519_mlkem512" "x448_mlkem512" "p256_bikel1" "x25519_bikel1" "x448_bikel1" "p256_hqc128" "x25519_hqc128" "x448_hqc128")
 
 #docker run --rm -it --cap-add=NET_ADMIN --cap-add=SYS_ADMIN -v "C:\Users\...\Desktop\openssl test\results:/logs" custom-oqs-provider-v3
 
@@ -61,6 +62,7 @@ s_client_loop(){
     local i
 
     for i in $(seq 1 "$MAX_ITER"); do
+       
         printf "[%04d] Starting iteration\n" "$i" >> "$combo_dir/s_client.log"
 
         # only need to run tcpdump once as per combo as they should all be the same?
@@ -74,15 +76,15 @@ s_client_loop(){
         # run client, feed no stdin and timeout to avoid hangs; use server IP inside namespace
         #TODO do can I do this without the tiemout and just exit when connection finished?
         START_NS=$(date +%s%N)
-        STATS=$(ip netns exec client /usr/bin/time -v \
+        ip netns exec client /usr/bin/time -v \
             openssl s_client -connect "10.0.0.2:$PORT" -groups "$KEM" -quiet < /dev/null \
-            2>&1 > "$combo_dir/s_client.log") 2> >(grep -E "User time|System time|Elapsed|Percent of CPU|Maximum resident set size" \
+            >> "$combo_dir/s_client.log" 2> >(grep -E "User time|System time|Elapsed|Percent of CPU|Maximum resident set size" \
                 | while IFS= read -r line; do printf "[%04d] %s\n" "$i" "$line"; done >> "$combo_dir/s_client_perf.log") || true
         END_NS=$(date +%s%N)
         WALL_NS=$((END_NS - START_NS))
-        WALL_S=$(awk "BEGIN:{print $WALL_NS/1000000000}")
+        # WALL_S=$(awk "BEGIN:{print $WALL_NS/1000000000}")
 
-        printf "[%04d] WALL_TIME_S=%s\n" "$i" "$WALL_S" >> "$combo_dir/s_client_perf.log"
+        printf "[%04d] WALL_TIME_S=%s\n" "$i" "$WALL_NS" >> "$combo_dir/s_client_perf.log"
         #tcpdump -r "$CAP_FILE" -n -c 1 -tttt # print last packet
         # stop tcpdump
         if [ "$i" -eq 1 ]; then
@@ -154,7 +156,7 @@ for delay in "${all_delay[@]}"; do
                     combo_dir="logs/${signame}_${hybrid_kem}_delay${delay}_loss${loss}_mtu${mtu}"
                     mkdir -p "$combo_dir"
 
-                    echo "Starting test: $signame / $hybrid_kem"
+                    echo "Starting test: $combo_dir"
 
                     PORT=$((4000 + RANDOM % 1000))
                     # start server, changes $certfile $keyfile $PORT $hybrid_kem, $SERVER_PID
