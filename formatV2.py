@@ -159,10 +159,10 @@ for folder in folders:
                         m2 = re.search(r"kbytes\):\s*([0-9]+)", line)
                         if m2:
                             entry['memory'] = m2.group(1)
-                    elif "BEGIN" in line:
-                        m2 = re.search(r"BEGIN:\s*([0-9]+)", line)
+                    elif "WALL_TIME_S=" in line:
+                        m2 = re.search(r"WALL_TIME_S=*([0-9]+)", line)
                         if m2:
-                            entry['handshake'] = m2.group(1)
+                            entry['handshake_ns'] = m2.group(1)
 
                 # flush last entry
                 if entry is not None:
@@ -214,7 +214,7 @@ for folder in folders:
 # Build DataFrames
 s_client_packets_df = pd.DataFrame(packets_rows, columns=['sig','pq','cl','delay','loss','mtu','packets'])
 s_client_df = pd.DataFrame(client_rows, columns=['sig','pq','cl','delay','loss','mtu','idx','decap_cl','decap_pq','decap_hybrid'])
-s_client_perf_df = pd.DataFrame(client_perf_rows, columns=['sig','pq','cl','delay','loss','mtu','idx','user_time','system_time','cpu','wall_clock_time','memory','handshake'])
+s_client_perf_df = pd.DataFrame(client_perf_rows, columns=['sig','pq','cl','delay','loss','mtu','idx','user_time','system_time','cpu','wall_clock_time','memory','handshake_ns'])
 s_server_df = pd.DataFrame(server_rows, columns=['sig','pq','cl','delay','loss','mtu','idx','encap_cl','encap_pq','encap_hybrid'])
 
 
