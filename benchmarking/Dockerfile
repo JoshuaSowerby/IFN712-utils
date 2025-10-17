@@ -4,15 +4,18 @@ RUN apt update && apt install -y time iproute2 tcpdump sysstat linux-tools-commo
 
 COPY ./liboqs-0.14.0.tar.gz ./0.14.0.tar.gz
 COPY ./openssl-3.5.2.tar.gz ./openssl-3.5.2.tar.gz
+COPY ./a.sh ./a.sh
 
 RUN apt update && apt install -y cmake ninja-build doxygen wget perl python3 python3-pip git&& \
 	echo "---- apt install successful" && \
 	\
+	wget https://github.com/openssl/openssl/releases/download/openssl-3.5.2/openssl-3.5.2.tar.gz && \
 	tar xf openssl-3.5.2.tar.gz && cd openssl-3.5.2 && \
 	./config --prefix=/opt/openssl-3.5.2 --openssldir=/opt/openssl-3.5.2 && \
 	make -j$(nproc) && make install_sw && make install_ssldirs && \
 	echo "---- openssl installed" && \
 	cd / && \
+	wget https://github.com/open-quantum-safe/liboqs/archive/refs/tags/0.14.0.tar.gz && \
 	tar xf 0.14.0.tar.gz && cd liboqs-0.14.0 && mkdir build && cd build && \
 	cmake .. -GNinja \
 	  -DCMAKE_INSTALL_PREFIX=/usr/local \
@@ -51,3 +54,5 @@ COPY ./openssl.cnf /opt/openssl-3.5.2/openssl.cnf
 ENV LD_LIBRARY_PATH=/opt/openssl-3.5.2/lib64/
 ENV PATH=/opt/openssl-3.5.2/bin:$PATH
 ENV LIBOQS_SRC_DIR=/liboqs-0.14.0
+RUN chmod +x /a.sh
+CMD ['/a.sh']

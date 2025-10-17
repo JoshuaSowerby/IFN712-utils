@@ -15,7 +15,6 @@ all_sigs=(
     "rsa3072_mldsa44",
     "p256_falcon512",
     "rsa3072_falcon512",
-    "sphincsshake128fsimple",
     "p256_sphincsshake128fsimple",
     "rsa3072_sphincsshake128fsimple",
     "p256_mayo1",
@@ -61,6 +60,9 @@ for folder in folders:
     #broken
     #sig = folder.split("_")[0]
     sig=find_in_tuple(folder, all_sigs)
+    if sig is None:
+        # print(folder)
+        continue#this is to skip the "sphincsshake128fsimple" only we accidentally added
     sig=sig.split("_")
     pq_sig="_".join(sig[1:])#test and add to entry
     cl_sig=sig[0]
@@ -72,6 +74,7 @@ for folder in folders:
 
     # best-effort: if not found, set to None or skip
     if pq is None or cl is None:
+        # print(folder)
         # skip folders that don't match expected naming pattern
         continue
 

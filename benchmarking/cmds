@@ -1,0 +1,253 @@
+aws s3 cp /path/to/file s3://my-bucket/
+
+
+make the .env use the lists...
+
+
+#0
+
+#1
+
+#2
+
+
+"p256_mldsa44 rsa3072_mldsa44 p256_falcon512 rsa3072_falcon512"
+
+"sphincsshake128fsimple p256_sphincsshake128fsimple rsa3072_sphincsshake128fsimple p256_mayo1"
+
+"rsa3072_mayo1 p256_snova2454shake rsa3072_snova2454shake"
+
+# all_kems=(
+"p256_frodo640shake x25519_frodo640shake x448_frodo640shake p256_mlkem512 x25519_mlkem512 x448_mlkem512 p256_bikel1 x25519_bikel1 x448_bikel1 p256_hqc128 x25519_hqc128 x448_hqc128"
+
+
+
+
+
+
+  #######################
+  #######################
+  #######################
+
+
+
+#l0
+docker run \
+  --cap-add=NET_ADMIN --cap-add=SYS_ADMIN \
+  -d --rm \
+  --cpus="1" \
+  --memory="512m" \
+  --memory-swap="512m" \
+  --cpuset-cpus="0" \
+  -e ALL_SIGS="p256_mldsa44 rsa3072_mldsa44 p256_falcon512 rsa3072_falcon512" \
+  -e ALL_KEMS="p256_frodo640shake x25519_frodo640shake x448_frodo640shake p256_mlkem512 x25519_mlkem512 x448_mlkem512 p256_bikel1 x25519_bikel1 x448_bikel1 p256_hqc128 x25519_hqc128 x448_hqc128" \
+  -e ALL_DELAY="5 25 100" \
+  -e ALL_LOSS="0 1 5" \
+  -e ALL_MTU="1500 1280 576" \
+  -v "C:\Users\robso\Desktop\format IFN\large0_logs:/logs" \
+  ifn712
+
+#l1
+docker run \
+  --cap-add=NET_ADMIN --cap-add=SYS_ADMIN \
+  -d --rm \
+  --cpus="1" \
+  --memory="512m" \
+  --memory-swap="512m" \
+  --cpuset-cpus="0" \
+  -e ALL_SIGS="sphincsshake128fsimple p256_sphincsshake128fsimple rsa3072_sphincsshake128fsimple p256_mayo1" \
+  -e ALL_KEMS="p256_frodo640shake x25519_frodo640shake x448_frodo640shake p256_mlkem512 x25519_mlkem512 x448_mlkem512 p256_bikel1 x25519_bikel1 x448_bikel1 p256_hqc128 x25519_hqc128 x448_hqc128" \
+  -e ALL_DELAY="5 25 100" \
+  -e ALL_LOSS="0 1 5" \
+  -e ALL_MTU="1500 1280 576" \
+  -v "C:\Users\robso\Desktop\format IFN\large1_logs:/logs" \
+  ifn712
+  
+#l2
+docker run \
+  --cap-add=NET_ADMIN --cap-add=SYS_ADMIN \
+  -d --rm \
+  --cpus="1" \
+  --memory="512m" \
+  --memory-swap="512m" \
+  --cpuset-cpus="0" \
+  -e ALL_SIGS="rsa3072_mayo1 p256_snova2454shake rsa3072_snova2454shake" \
+  -e ALL_KEMS="p256_frodo640shake x25519_frodo640shake x448_frodo640shake p256_mlkem512 x25519_mlkem512 x448_mlkem512 p256_bikel1 x25519_bikel1 x448_bikel1 p256_hqc128 x25519_hqc128 x448_hqc128" \
+  -e ALL_DELAY="5 25 100" \
+  -e ALL_LOSS="0 1 5" \
+  -e ALL_MTU="1500 1280 576" \
+  -v "C:\Users\robso\Desktop\format IFN\large2_logs:/logs" \
+  ifn712
+
+
+
+#m0
+docker run \
+  --cap-add=NET_ADMIN --cap-add=SYS_ADMIN \
+  -d --rm \
+  --cpus="0.5" \
+  --memory="256m" \
+  --memory-swap="256m" \
+  --cpuset-cpus="0" \
+  -e ALL_SIGS="p256_mldsa44 rsa3072_mldsa44 p256_falcon512 rsa3072_falcon512" \
+  -e ALL_KEMS="p256_frodo640shake x25519_frodo640shake x448_frodo640shake p256_mlkem512 x25519_mlkem512 x448_mlkem512 p256_bikel1 x25519_bikel1 x448_bikel1 p256_hqc128 x25519_hqc128 x448_hqc128" \
+  -e ALL_DELAY="5 25 100" \
+  -e ALL_LOSS="0 1 5" \
+  -e ALL_MTU="1500 1280 576" \
+  -v "C:\Users\robso\Desktop\format IFN\m0_logs:/logs" \
+  ifn712
+
+#m1
+docker run \
+  --cap-add=NET_ADMIN --cap-add=SYS_ADMIN \
+  -d --rm \
+  --cpus="0.5" \
+  --memory="256m" \
+  --memory-swap="256m" \
+  --cpuset-cpus="0" \
+  -e ALL_SIGS="sphincsshake128fsimple p256_sphincsshake128fsimple rsa3072_sphincsshake128fsimple p256_mayo1" \
+  -e ALL_KEMS="p256_frodo640shake x25519_frodo640shake x448_frodo640shake p256_mlkem512 x25519_mlkem512 x448_mlkem512 p256_bikel1 x25519_bikel1 x448_bikel1 p256_hqc128 x25519_hqc128 x448_hqc128" \
+  -e ALL_DELAY="5 25 100" \
+  -e ALL_LOSS="0 1 5" \
+  -e ALL_MTU="1500 1280 576" \
+  -v "C:\Users\robso\Desktop\format IFN\m1_logs:/logs" \
+  ifn712
+  
+#m2
+docker run \
+  --cap-add=NET_ADMIN --cap-add=SYS_ADMIN \
+  -d --rm \
+  --cpus="0.5" \
+  --memory="256m" \
+  --memory-swap="256m" \
+  --cpuset-cpus="0" \
+  -e ALL_SIGS="rsa3072_mayo1 p256_snova2454shake rsa3072_snova2454shake" \
+  -e ALL_KEMS="p256_frodo640shake x25519_frodo640shake x448_frodo640shake p256_mlkem512 x25519_mlkem512 x448_mlkem512 p256_bikel1 x25519_bikel1 x448_bikel1 p256_hqc128 x25519_hqc128 x448_hqc128" \
+  -e ALL_DELAY="5 25 100" \
+  -e ALL_LOSS="0 1 5" \
+  -e ALL_MTU="1500 1280 576" \
+  -v "C:\Users\robso\Desktop\format IFN\m2_logs:/logs" \
+  ifn712
+
+
+#s0
+docker run \
+  --cap-add=NET_ADMIN --cap-add=SYS_ADMIN \
+  -d --rm \
+  --cpus="0.25" \
+  --memory="128m" \
+  --memory-swap="128m" \
+  --cpuset-cpus="0" \
+  -e ALL_SIGS="p256_mldsa44 rsa3072_mldsa44 p256_falcon512 rsa3072_falcon512" \
+  -e ALL_KEMS="p256_frodo640shake x25519_frodo640shake x448_frodo640shake p256_mlkem512 x25519_mlkem512 x448_mlkem512 p256_bikel1 x25519_bikel1 x448_bikel1 p256_hqc128 x25519_hqc128 x448_hqc128" \
+  -e ALL_DELAY="5 25 100" \
+  -e ALL_LOSS="0 1 5" \
+  -e ALL_MTU="1500 1280 576" \
+  -v "C:\Users\robso\Desktop\format IFN\s0_logs:/logs" \
+  ifn712
+
+#s1
+docker run \
+  --cap-add=NET_ADMIN --cap-add=SYS_ADMIN \
+  -d --rm \
+  --cpus="0.25" \
+  --memory="128m" \
+  --memory-swap="128m" \
+  --cpuset-cpus="0" \
+  -e ALL_SIGS="sphincsshake128fsimple p256_sphincsshake128fsimple rsa3072_sphincsshake128fsimple p256_mayo1" \
+  -e ALL_KEMS="p256_frodo640shake x25519_frodo640shake x448_frodo640shake p256_mlkem512 x25519_mlkem512 x448_mlkem512 p256_bikel1 x25519_bikel1 x448_bikel1 p256_hqc128 x25519_hqc128 x448_hqc128" \
+  -e ALL_DELAY="5 25 100" \
+  -e ALL_LOSS="0 1 5" \
+  -e ALL_MTU="1500 1280 576" \
+  -v "C:\Users\robso\Desktop\format IFN\s1_logs:/logs" \
+  ifn712
+  
+#s2
+docker run \
+  --cap-add=NET_ADMIN --cap-add=SYS_ADMIN \
+  -d --rm \
+  --cpus="0.25" \
+  --memory="128m" \
+  --memory-swap="128m" \
+  --cpuset-cpus="0" \
+  -e ALL_SIGS="rsa3072_mayo1 p256_snova2454shake rsa3072_snova2454shake" \
+  -e ALL_KEMS="p256_frodo640shake x25519_frodo640shake x448_frodo640shake p256_mlkem512 x25519_mlkem512 x448_mlkem512 p256_bikel1 x25519_bikel1 x448_bikel1 p256_hqc128 x25519_hqc128 x448_hqc128" \
+  -e ALL_DELAY="5 25 100" \
+  -e ALL_LOSS="0 1 5" \
+  -e ALL_MTU="1500 1280 576" \
+  -v "C:\Users\robso\Desktop\format IFN\s2_logs:/logs" \
+  ifn712
+  
+  #######################
+  #######################
+  #######################
+  
+
+docker run `
+  --cap-add=NET_ADMIN --cap-add=SYS_ADMIN `
+  -d --rm `
+  --cpus="0.25" `
+  --memory="128m" `
+  --memory-swap="128m" `
+  --cpuset-cpus="0" `
+  -e ALL_SIGS="rsa3072_mayo1 p256_snova2454shake rsa3072_snova2454shake" `
+  -e ALL_KEMS="p256_frodo640shake x25519_frodo640shake x448_frodo640shake p256_mlkem512 x25519_mlkem512 x448_mlkem512 p256_bikel1 x25519_bikel1 x448_bikel1 p256_hqc128 x25519_hqc128 x448_hqc128" `
+  -e ALL_DELAY="5 25 100" `
+  -e ALL_LOSS="0 1 5" `
+  -e ALL_MTU="1500 1280 576" `
+  -v "C:\Users\robso\Desktop\format IFN\s2_logs:/logs" `
+  ifn712
+
+
+  
+docker run --rm -it --cap-add=NET_ADMIN --cap-add=SYS_ADMIN \
+	-v "C:\Users\robso\Desktop\openssl test\results:/logs" ifn712
+	
+	
+	
+docker run \
+  --cap-add=NET_ADMIN --cap-add=SYS_ADMIN \
+  -it --rm \
+  --cpus="0.25" \
+  --memory="128m" \
+  --memory-swap="128m" \
+  --cpuset-cpus="0" \
+  -e ALL_SIGS="rsa3072_mayo1 p256_snova2454shake rsa3072_snova2454shake" \
+  -e ALL_KEMS="p256_frodo640shake x25519_frodo640shake x448_frodo640shake p256_mlkem512 x25519_mlkem512 x448_mlkem512 p256_bikel1 x25519_bikel1 x448_bikel1 p256_hqc128 x25519_hqc128 x448_hqc128" \
+  -e ALL_DELAY="5 25 100" \
+  -e ALL_LOSS="0 1 5" \
+  -e ALL_MTU="1500 1280 576" \
+  -v "s2_logs:/logs" \
+  ifn712
+  
+  
+docker run \
+  --cap-add=NET_ADMIN --cap-add=SYS_ADMIN \
+  -it --rm \
+  --cpus="0.25" \
+  --memory="128m" \
+  --memory-swap="128m" \
+  --cpuset-cpus="0" \
+  -e ALL_SIGS="rsa3072_mayo1 p256_snova2454shake rsa3072_snova2454shake" \
+  -e ALL_KEMS="p256_frodo640shakex448_mlkem512 x448_hqc128" \
+  -e ALL_DELAY="5 25 100" \
+  -e ALL_LOSS="0 1 5" \
+  -e ALL_MTU="1500 1280 576" \
+  -v "/s2_logs:/logs" \
+  ifn712
+  
+  
+docker run `
+  --cap-add=NET_ADMIN --cap-add=SYS_ADMIN `
+  -it --rm `
+  --cpus="0.25" `
+  --memory="128m" `
+  --memory-swap="128m" `
+  --cpuset-cpus="0" `
+  -e ALL_SIGS="rsa3072_mayo1 p256_snova2454shake rsa3072_snova2454shake" `
+  -e ALL_KEMS="p256_frodo640shakex448_mlkem512 x448_hqc128" `
+  -e ALL_DELAY="5 25 100" `
+  -e ALL_LOSS="0 1 5" `
+  -e ALL_MTU="1500 1280 576" `
+  custom-oqs-provider-v4
+ 
