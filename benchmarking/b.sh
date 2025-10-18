@@ -53,7 +53,7 @@ s_time_loop(){
     local i
 
     ip netns exec client /usr/bin/time -v \
-        openssl s_time -connect "10.0.0.2:$PORT" -groups "$KEM" -new -time 10 -quiet < /dev/null \
+        openssl s_time -connect "10.0.0.2:$PORT" -groups "$KEM" -new -time 10 < /dev/null \
         >> "$combo_dir/s_client.log" 2> >(grep -E "connections|User time|System time|Elapsed|Percent of CPU|Maximum resident set size" \
             | while IFS= read -r line; do printf "[%04d] %s\n" "$i" "$line"; done >> "$combo_dir/s_client_perf.log") || true
 
@@ -183,4 +183,3 @@ for delay in "${all_delay[@]}"; do
         done
     done
 done
-
