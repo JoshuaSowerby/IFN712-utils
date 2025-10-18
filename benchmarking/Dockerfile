@@ -1,16 +1,19 @@
 FROM ubuntu:24.04
 
 RUN apt update && apt install -y time iproute2 tcpdump sysstat linux-tools-common linux-tools-generic cpulimit numactl cgroup-tools net-tools nano
-
-COPY ./liboqs-0.14.0.tar.gz ./0.14.0.tar.gz
-COPY ./openssl-3.5.2.tar.gz ./openssl-3.5.2.tar.gz
+#COPY ./liboqs-0.14.0.tar.gz ./0.14.0.tar.gz
+#COPY ./openssl-3.5.2.tar.gz ./openssl-3.5.2.tar.gz
+COPY ./s_time.c ./s_time.c
 COPY ./a.sh ./a.sh
+COPY ./b.sh ./b.sh
 
 RUN apt update && apt install -y cmake ninja-build doxygen wget perl python3 python3-pip git&& \
 	echo "---- apt install successful" && \
 	\
 	wget https://github.com/openssl/openssl/releases/download/openssl-3.5.2/openssl-3.5.2.tar.gz && \
 	tar xf openssl-3.5.2.tar.gz && cd openssl-3.5.2 && \
+	rm ./apps/s_time.c && \
+	cp /s_time.c ./apps/s_time.c && \
 	./config --prefix=/opt/openssl-3.5.2 --openssldir=/opt/openssl-3.5.2 && \
 	make -j$(nproc) && make install_sw && make install_ssldirs && \
 	echo "---- openssl installed" && \
@@ -55,4 +58,4 @@ ENV LD_LIBRARY_PATH=/opt/openssl-3.5.2/lib64/
 ENV PATH=/opt/openssl-3.5.2/bin:$PATH
 ENV LIBOQS_SRC_DIR=/liboqs-0.14.0
 RUN chmod +x /a.sh
-CMD ['/a.sh']
+RUN chmod +x /b.sh
