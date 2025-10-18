@@ -38,7 +38,7 @@ for i in size:
             f'--cap-add=NET_ADMIN --cap-add=SYS_ADMIN '+
             f'--cpus="{cpu}" --memory="{mem}" --memory-swap="{mem}" --cpuset-cpus="{int(math.floor(cpuset))}"  '+
             f'-e ALL_SIGS="{' '.join(subset)}" '+
-            f'-e ALL_KEMS={' '.join(all_kems)} '+
+            f'-e ALL_KEMS="{' '.join(all_kems)}" '+
             f'-e ALL_DELAY="{"5 25 100"}" '+
             f'-e ALL_LOSS="{"0 1 5"}" '+
             f'-e ALL_MTU="{"1500 1280 576"}" '+
