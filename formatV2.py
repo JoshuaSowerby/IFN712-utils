@@ -43,9 +43,9 @@ all_kems=(
 # all_sigs unused in rest of script; keep if needed
 #all_sigs = ("rsa", "ed25519", "ed448", "prime256v1", "secp384r1", "secp521r1")
 
-path = r"C:\Users\robso\Desktop\openssl test\results"
-
-# We'll accumulate rows in lists of dicts, then build DataFrames once.
+path = r"C:\Users\robso\Downloads\res_a - Copy\res_a - Copy\t_logs"
+suffix='t'
+# list of dicts, to be made into dfs
 packets_rows = []
 client_rows = []
 client_perf_rows = []
@@ -135,7 +135,7 @@ for folder in folders:
                             }
                         continue
 
-                    # same index: look for fields
+                    # same index, look for fields
                     if "dec classical" in line:
                         m2 = re.search(r"([0-9]+)ns", line)
                         if m2:
@@ -152,7 +152,7 @@ for folder in folders:
                         m2 = re.search(r"sigtotal:\s*([0-9]+)ns", line)
                         if m2:
                             entry['sig_verify'] = int(m2.group(1))
-                # end file: push last entry if exists
+                # end file, push last entry if exists
                 if entry is not None:
                     client_rows.append(entry)
 
@@ -177,7 +177,7 @@ for folder in folders:
                             'idx': current_idx
                         }
                     elif idx != current_idx:
-                        # new index: flush previous
+                        # new index, flush previous
                         client_perf_rows.append(entry)
                         current_idx = idx
                         entry = {
@@ -274,22 +274,22 @@ merged_df = pd.merge(
     s_client_df,
     s_client_perf_df,
     on=merge_keys,
-    how='inner'   # only keep rows that exist in both
+    how='inner' # only keep rows that exist in both
 )
 merged_df = pd.merge(
     merged_df,
     s_server_df,
     on=merge_keys,
-    how='inner'   # again only keep rows present in all three
+    how='inner'
 )
 merged_df = pd.merge(
     merged_df,
     s_client_packets_df,
     on=['cl_sig','pq_sig','cl','pq','delay','loss','mtu'],
-    how='inner'   # again only keep rows present in all three
+    how='inner'
 )
 merged_df.reset_index(drop=True, inplace=True)
-merged_df.to_csv('./all.csv', index=False)
+merged_df.to_csv(f'./all_a_{suffix}.csv', index=False)
 # Save CSVs
 # s_client_packets_df.to_csv('./packet.csv', index=False)
 # merged_df_temp.to_csv('./merged.csv', index=False)
