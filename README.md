@@ -1,0 +1,15 @@
+# Contents
+- `/benchmarking`: all files needed to create docker enviorment
+    - `a.sh`: contains the bash script used to generate single handshake data.
+    - `b.sh`: contains the bash script used to generate throughput data.
+    - `Dockerfile`: The Dockerfile used to create the environment.
+    - `generate.yml`: replaces oqs-providers version, is used to create the hybrids
+    - `openssl.cnf` required to enable oqs-provider
+    - `oqs_hyb_kem.c`: modified version of oqs-providers to output timings of encapsulation and decapsulation for hybrid KEMs.
+    - `oqs_sig.c`: modified version of oqs-providers to output signature verify times.
+    - `s_time.c`: modified openssl's version to allow for specification of KEM.  
+- `/csv`: all csv files generated from formatV2.py. a/b is if it is from `a.sh` or `b.sh`, l/m/s/t is the compute size
+- `docker.py` used to generate docker container commands for ease
+- `formatV2.py` formats the output logs from `a.sh` and `b.sh` into the csv's found in `/csv`
+- `dataV2.ipynb`: the notebook used for data analysis of `a.sh` outputs
+- `throughput.ipynb` notebook used to analyse `b.sh` outputs
